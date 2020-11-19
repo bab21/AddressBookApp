@@ -47,10 +47,51 @@ window.addEventListener('DOMContentLoaded',(event)=>{
 });
 
 const save = (event)=>{
+    console.log("calling save ");
     try{
         let addressBookContact = createAddressBookContact();
-        createAndUpdateStorage(addressBookContact);
+        // createAndUpdateStorage(addressBookContact);
     }catch(e){
-        return;
+        console.log("error in save");
+        // return;
     }
 }
+
+const createAddressBookContact = () =>{
+    let addressBookContact=new AddressBookContact();
+    try{
+        addressBookContact.fullName=getInputValueById('#fullName');
+        console.log("name entered is "+addressBookContact.fullName);
+    }catch(e){
+        // setTextValue('.text-error',e);
+        console.log( e);
+    }
+    try{
+        addressBookContact.address=getInputValueById('#address');
+    }catch(e){
+        console.log( e);
+    }
+    try{
+        addressBookContact.phoneNumber=getInputValueById('#tel');
+    }catch(e){
+
+    }
+    addressBookContact.state=getInputValueById('#state');
+    addressBookContact.city=getInputValueById('#city');
+    addressBookContact.zipCode=getInputValueById('#zipCode');
+    alert(addressBookContact.toString());
+    return addressBookContact;
+}
+
+const getInputValueById = (id) =>{
+    let value=document.querySelector(id).value;
+    return value;
+}
+// const getSelectedValues = (propertyValue) =>{
+//     let allItems=document.querySelectorAll(propertyValue);
+//     let selItems=[];
+//     allItems.forEach(item=>{
+//         if(item.checked) selItems.push(item.value);
+//     });
+//     return selItems;
+// }

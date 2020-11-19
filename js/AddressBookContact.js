@@ -20,6 +20,24 @@ class AddressBookContact{
         return this._fullName;
     }
 
+    set city(city){
+        this._city=city;
+    }
+    get city(){
+        return this._city;
+    }
+    set state(state){
+        this._state=state;
+    }
+    get state(){
+        return this._state;
+    }
+    set zipCode(zipCode){
+        this._zipCode=zipCode;
+    }
+    get zipCode(){
+        return this._zipCode;
+    }
     set phoneNumber(phoneNumber){
         let phoneNumberRegex=RegExp("[0-9]{2}[\\s][0-9]{10}");
         if(phoneNumberRegex.test(phoneNumber)){
@@ -35,7 +53,7 @@ class AddressBookContact{
         console.log(" in address "+address);
         let addressWordRegex=RegExp('^[A-Z]{1}[a-zA-Z\\s]{2,}$');
         let addressWords = address.split(" ");
-        for(const word in addressWords){
+        for(let word in addressWords){
             if(!addressWordRegex.test(word))
             {   console.log("value   .. "+word);
                 throw "address is invalid";
@@ -45,5 +63,9 @@ class AddressBookContact{
     }
     get address(){
         return this._address;
+    }
+    toString(){
+        return "Full Name ="+this.fullName+" Address ="+this.address+" City ="+this.city+" State = "+this.state+
+        "Phone number = "+this.phoneNumber+"Zip Code "+this.zipCode;
     }
 }
