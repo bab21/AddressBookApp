@@ -45,3 +45,12 @@ window.addEventListener('DOMContentLoaded',(event)=>{
     });
     
 });
+
+const save = (event)=>{
+    try{
+        let addressBookContact = createAddressBookContact();
+        createAndUpdateStorage(addressBookContact);
+    }catch(e){
+        return;
+    }
+}
