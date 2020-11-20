@@ -77,10 +77,6 @@ const save = (event)=>{
         createAndUpdateStorage();
         resetForm();
         window.location.replace(site_properties.home_page);
-
-        // let addressBookContact = createAddressBookContact();
-        // createAndUpdateStorage(addressBookContact);
-        // window.location.replace(site_properties.home_page);
     }catch(e){
         console.log("error"+e);
         console.log("error in save");
@@ -132,19 +128,6 @@ function createAndUpdateStorage(){
         addressBookContactList = [createAddressBookContact()];
     }
     localStorage.setItem("AddressBookContactList",JSON.stringify(addressBookContactList));
-
-
-
-
-
-    // let addressBookContactList= JSON.parse(localStorage.getItem("AddressBookContactList"));
-    // if(addressBookContactList!=undefined){
-    //     addressBookContactList.push(addressBookContact);
-    // }else{
-    //     addressBookContactList=[addressBookContact];
-    // }
-    // alert(addressBookContactList.toString());
-    // localStorage.setItem("AddressBookContactList",JSON.stringify(addressBookContactList));
 }
 
 const creteAddressBookContactData = (id) => {
@@ -166,7 +149,6 @@ const setAddressBookContact = (addressBookContact)=>{
     try{
         addressBookContact.fullName = addressBookContactObj._fullName;
     }catch(e){
-        // setTextValue('text-error',e);
         throw e;
     }
     addressBookContact.city = addressBookContactObj._city;
