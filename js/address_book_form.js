@@ -104,10 +104,21 @@ const createAddressBookContact = () =>{
     addressBookContact.state=getInputValueById('#state');
     addressBookContact.city=getInputValueById('#city');
     addressBookContact.zipCode=getInputValueById('#zipCode');
-    addressBookContact.id=getEmployeePayrollDataFromStorage().length;
+    addressBookContact.id=getMaxValueOfContactID()+1;
     alert(addressBookContact.toString());
     return addressBookContact;
 }
+ 
+const getMaxValueOfContactID =()=>{
+    addressBookContactList =  getEmployeePayrollDataFromStorage();
+    let max = addressBookContactList
+                .map(personData => personData._id)
+                .reduce(function(a, b) {
+                    return Math.max(a, b);
+                });
+    return max;
+}
+
 
 const getInputValueById = (id) =>{
     let value=document.querySelector(id).value;

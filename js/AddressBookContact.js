@@ -1,6 +1,6 @@
 class AddressBookContact{
     set id(id){
-        let idRegex=RegExp('[0-9]{1}[0-9]{0,}$');
+        let idRegex=RegExp('^[0-9]{1}[0-9]{0,}$');
         if(idRegex.test(id)){
             this._id=id;
         }else throw "id is invalid";
