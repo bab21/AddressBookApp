@@ -104,6 +104,7 @@ const createAddressBookContact = () =>{
     addressBookContact.state=getInputValueById('#state');
     addressBookContact.city=getInputValueById('#city');
     addressBookContact.zipCode=getInputValueById('#zipCode');
+    addressBookContact.id=getEmployeePayrollDataFromStorage().length;
     alert(addressBookContact.toString());
     return addressBookContact;
 }
@@ -111,4 +112,10 @@ const createAddressBookContact = () =>{
 const getInputValueById = (id) =>{
     let value=document.querySelector(id).value;
     return value;
+}
+
+const getEmployeePayrollDataFromStorage = ()=> {
+    return localStorage.getItem('AddressBookContactList')?
+                        JSON.parse(localStorage.getItem('AddressBookContactList')):[];
+
 }
