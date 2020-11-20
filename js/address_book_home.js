@@ -3,6 +3,7 @@ window.addEventListener('DOMContentLoaded', (event)=>{
     addressBookContactList = getAddressBookContactFromStorage();
     document.querySelector(".person-count").textContent = addressBookContactList.length;
     createInnerHtml();
+    localStorage.removeItem('editPerson');
 });
 
 const getAddressBookContactFromStorage = ()=> {
@@ -24,6 +25,13 @@ const remove = (node) => {
     localStorage.setItem("AddressBookContactList",JSON.stringify(addressBookContactList));
     document.querySelector(".person-count").textContent = addressBookContactList.length;
     createInnerHtml();
+}
+
+const update = (node) =>{
+    let addressBookContact = addressBookContactList.find(personData => personData._id==node.id);
+    if(!addressBookContact) return;
+    localStorage.setItem('editPerson',JSON.stringify(addressBookContact));
+    window.location.replace(site_properties.address_book_form_page); 
 }
 
 const createInnerHtml= () => {

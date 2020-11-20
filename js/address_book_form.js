@@ -1,3 +1,6 @@
+let isUpdate = false;
+let addressBookContactObj ={};
+
 window.addEventListener('DOMContentLoaded',(event)=>{
     const name=document.querySelector("#fullName");
     const textError=document.querySelector('.text-error');
@@ -43,8 +46,27 @@ window.addEventListener('DOMContentLoaded',(event)=>{
             addressError.textContent=e;
         }
     });
+    checkForUpdate();
     
 });
+
+const checkForUpdate = () =>{
+    const addressBookContactJson = localStorage.getItem('editPerson');
+    isUpdate = addressBookContactJson?true:false;
+    if(!isUpdate) return;
+    addressBookContactObj = JSON.parse(addressBookContactJson);
+    setForm();
+}
+
+const setForm = () => {
+    setValue('#fullName',addressBookContactObj._fullName);
+    setValue('#city',addressBookContactObj._city);
+    setValue('#state',addressBookContactObj._state);
+    setValue('#address',addressBookContactObj._address);
+    setValue('#tel',addressBookContactObj._phoneNumber);
+    setValue('#zipCode',addressBookContactObj._zipCode);
+}
+
 
 const save = (event)=>{
     console.log("calling save ");
