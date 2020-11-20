@@ -39,8 +39,8 @@ class AddressBookContact{
         return this._zipCode;
     }
     set phoneNumber(phoneNumber){
-        let phoneNumberRegex1=RegExp("[0-9]{2}[\\s][0-9]{10}");
-        let phoneNumberRegex2=RegExp("[0-9]{10}");
+        let phoneNumberRegex1=RegExp("^[0-9]{2}[\\s][0-9]{10}$");
+        let phoneNumberRegex2=RegExp("^[0-9]{1}[0-9]{9}$");
         if(phoneNumberRegex1.test(phoneNumber) || phoneNumberRegex2.test(phoneNumber)){
             this._phoneNumber=phoneNumber;
         }

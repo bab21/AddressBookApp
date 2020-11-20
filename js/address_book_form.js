@@ -51,10 +51,25 @@ const save = (event)=>{
     try{
         let addressBookContact = createAddressBookContact();
         createAndUpdateStorage(addressBookContact);
+        window.location.replace(site_properties.home_page);
     }catch(e){
         console.log("error in save");
         return;
     }
+}
+
+const resetForm = (event)=>{
+    setValue('#fullName','');
+    setValue('#state','Bihar');
+    setValue('#city','Patna');
+    setValue('#tel','');
+    setValue('#zipCode','');
+    setValue('#address','');
+}
+
+const setValue =(id,value)=>{
+    const element = document.querySelector(id);
+    element.value=value;
 }
 
 function createAndUpdateStorage(addressBookContact){
