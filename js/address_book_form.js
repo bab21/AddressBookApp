@@ -69,15 +69,34 @@ const setForm = () => {
 
 
 const save = (event)=>{
+    event.preventDefault();
+    event.stopPropagation();
     console.log("calling save ");
     try{
-        let addressBookContact = createAddressBookContact();
-        createAndUpdateStorage(addressBookContact);
+        setAddressBookContactObject();
+        createAndUpdateStorage();
+        resetForm();
         window.location.replace(site_properties.home_page);
+
+        // let addressBookContact = createAddressBookContact();
+        // createAndUpdateStorage(addressBookContact);
+        // window.location.replace(site_properties.home_page);
     }catch(e){
+        console.log("error"+e);
         console.log("error in save");
         return;
     }
+}
+
+const setAddressBookContactObject =()=>{
+    addressBookContactObj._fullName=getInputValueById('#fullName');
+    addressBookContactObj._address =getInputValueById('#address');
+    addressBookContactObj._city= getInputValueById('#city');
+    addressBookContactObj._state= getInputValueById('#state');
+    addressBookContactObj._zipCode= getInputValueById('#zipCode');
+    addressBookContactObj._phoneNumber= getInputValueById('#tel');
+
+    console.log(addressBookContactObj.toString());
 }
 
 const resetForm = (event)=>{
@@ -94,15 +113,73 @@ const setValue =(id,value)=>{
     element.value=value;
 }
 
-function createAndUpdateStorage(addressBookContact){
+function createAndUpdateStorage(){
     let addressBookContactList= JSON.parse(localStorage.getItem("AddressBookContactList"));
-    if(addressBookContactList!=undefined){
-        addressBookContactList.push(addressBookContact);
+    if(addressBookContactList){
+        let addressBookContact= addressBookContactList.
+                                find(personData => personData._id == addressBookContactObj._id);
+         
+        if(!addressBookContact){
+            addressBookContactList.push(createAddressBookContact());
+
+        }else{
+            const index= addressBookContactList
+                            .map(personData => personData._id)
+                            .indexOf(addressBookContact._id);
+            addressBookContactList.splice(index,1,creteAddressBookContactData(addressBookContact._id));
+        }
     }else{
-        addressBookContactList=[addressBookContact];
+        addressBookContactList = [createAddressBookContact()];
     }
-    alert(addressBookContactList.toString());
     localStorage.setItem("AddressBookContactList",JSON.stringify(addressBookContactList));
+
+
+
+
+
+    // let addressBookContactList= JSON.parse(localStorage.getItem("AddressBookContactList"));
+    // if(addressBookContactList!=undefined){
+    //     addressBookContactList.push(addressBookContact);
+    // }else{
+    //     addressBookContactList=[addressBookContact];
+    // }
+    // alert(addressBookContactList.toString());
+    // localStorage.setItem("AddressBookContactList",JSON.stringify(addressBookContactList));
+}
+
+const creteAddressBookContactData = (id) => {
+    let addressBookContact =new AddressBookContact();
+    if(!id) addressBookContact.id = createNewPersonId();
+    else addressBookContact.id=id;
+    setAddressBookContact(addressBookContact);
+    return addressBookContact;
+}
+
+const createNewPersonId = () =>{
+    let personID = localStorage.getItem('PersoneID');
+    personID = !empID?1:(parseInt(personID)+1).toString();
+    localStorage.setItem("PersonID",personID);
+    return personID;
+}
+
+const setAddressBookContact = (addressBookContact)=>{
+    try{
+        addressBookContact.fullName = addressBookContactObj._fullName;
+    }catch(e){
+        // setTextValue('text-error',e);
+        throw e;
+    }
+    addressBookContact.city = addressBookContactObj._city;
+    addressBookContact.state = addressBookContactObj._state;
+    addressBookContact.address = addressBookContactObj._address;
+    addressBookContact.zipCode = addressBookContactObj._zipCode;
+    try{
+        addressBookContact.phoneNumber = addressBookContactObj._phoneNumber;
+    }catch(e){
+        throw e;
+    }
+
+    alert(addressBookContact.toString());
 }
 
 const createAddressBookContact = () =>{
