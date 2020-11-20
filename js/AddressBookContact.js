@@ -39,8 +39,9 @@ class AddressBookContact{
         return this._zipCode;
     }
     set phoneNumber(phoneNumber){
-        let phoneNumberRegex=RegExp("[0-9]{2}[\\s][0-9]{10}");
-        if(phoneNumberRegex.test(phoneNumber)){
+        let phoneNumberRegex1=RegExp("[0-9]{2}[\\s][0-9]{10}");
+        let phoneNumberRegex2=RegExp("[0-9]{10}");
+        if(phoneNumberRegex1.test(phoneNumber) || phoneNumberRegex2.test(phoneNumber)){
             this._phoneNumber=phoneNumber;
         }
         else throw "Phone Number invalid!";
@@ -51,9 +52,11 @@ class AddressBookContact{
 
     set address(address){
         console.log(" in address "+address);
-        let addressWordRegex=RegExp('^[A-Z]{1}[a-zA-Z\\s]{2,}$');
+        let addressWordRegex=RegExp('^[a-zA-Z0-9@/,]{2,}$');
         let addressWords = address.split(" ");
-        for(let word in addressWords){
+        console.log(addressWords);
+        for(const word of addressWords){
+            console.log("array valu is "+word);
             if(!addressWordRegex.test(word))
             {   console.log("value   .. "+word);
                 throw "address is invalid";
@@ -66,6 +69,6 @@ class AddressBookContact{
     }
     toString(){
         return "Full Name ="+this.fullName+" Address ="+this.address+" City ="+this.city+" State = "+this.state+
-        "Phone number = "+this.phoneNumber+"Zip Code "+this.zipCode;
+        " Phone number = "+this.phoneNumber+"Zip Code "+this.zipCode;
     }
 }

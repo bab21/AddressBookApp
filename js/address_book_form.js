@@ -50,11 +50,22 @@ const save = (event)=>{
     console.log("calling save ");
     try{
         let addressBookContact = createAddressBookContact();
-        // createAndUpdateStorage(addressBookContact);
+        createAndUpdateStorage(addressBookContact);
     }catch(e){
         console.log("error in save");
-        // return;
+        return;
     }
+}
+
+function createAndUpdateStorage(addressBookContact){
+    let addressBookContactList= JSON.parse(localStorage.getItem("AddressBookContactList"));
+    if(addressBookContactList!=undefined){
+        addressBookContactList.push(addressBookContact);
+    }else{
+        addressBookContactList=[addressBookContact];
+    }
+    alert(addressBookContactList.toString());
+    localStorage.setItem("AddressBookContactList",JSON.stringify(addressBookContactList));
 }
 
 const createAddressBookContact = () =>{
@@ -63,7 +74,6 @@ const createAddressBookContact = () =>{
         addressBookContact.fullName=getInputValueById('#fullName');
         console.log("name entered is "+addressBookContact.fullName);
     }catch(e){
-        // setTextValue('.text-error',e);
         console.log( e);
     }
     try{
@@ -87,11 +97,3 @@ const getInputValueById = (id) =>{
     let value=document.querySelector(id).value;
     return value;
 }
-// const getSelectedValues = (propertyValue) =>{
-//     let allItems=document.querySelectorAll(propertyValue);
-//     let selItems=[];
-//     allItems.forEach(item=>{
-//         if(item.checked) selItems.push(item.value);
-//     });
-//     return selItems;
-// }
